@@ -1,18 +1,5 @@
 version: "3.9"
-services:
-  mysql:
-    container_name: mysql
-    image: mysql:8
-    ports:
-      - "3307:3306"
-    environment: 
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msvc_usuarios
-    volumes: 
-      - data-mysql:/var/lib/mysql
-    restart: always
-    networks:
-      - spring
+services: 
   postgres14:
     container_name: postgres14 
     image: postgres:14-alpine
@@ -27,26 +14,6 @@ services:
     networks:
       - spring
    
-  msvc-usuarios:
-    container_name: msvc-usuarios
-    image: ivanchavarro/usuarios:latest
-    #build:
-    #  context: ./
-    #  dockerfile: ./mcvc-usuarios/Dockerfile
-    ports:
-      - "8001:8001"
-    environment: 
-      PORT: 8001
-      DB_HOST: mysql:3306
-      DB_DATABASE: msvc_usuarios
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      CURSOS_URL: msvc-cursos:8002/cursos
-    networks:
-      - spring
-    depends_on:
-      - mysql
-    restart: always
     
   msvc-cursos:
     container_name: msvc-cursos
@@ -62,17 +29,14 @@ services:
       DB_DATABASE: msvc_cursos
       DB_USERNAME: postgres
       DB_PASSWORD: 123456
-      USUARIOS_URL: msvc-usuarios:8001/usuarios
+      USUARIOS_URL: http://52.90.66.117:8001/usuarios
     networks:
       - spring
     depends_on:
       - postgres14
-      - msvc-usuarios
     restart: always
     
 volumes: 
-  data-mysql:
-    name: data-mysql 
   data-postgres:
     name: data-postgres
     
