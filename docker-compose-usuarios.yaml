@@ -28,7 +28,7 @@ services:
       DB_DATABASE: msvc_usuarios
       DB_USERNAME: root
       DB_PASSWORD: root
-      CURSOS_URL: http://44.202.159.39:8002/cursos
+      CURSOS_URL: http://174.129.92.117:8002/cursos
     networks:
       - spring
     depends_on:

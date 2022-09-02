@@ -29,7 +29,7 @@ services:
       DB_DATABASE: msvc_cursos
       DB_USERNAME: postgres
       DB_PASSWORD: 123456
-      USUARIOS_URL: http://52.90.66.117:8001/usuarios
+      USUARIOS_URL: http://54.90.94.246:8001/usuarios
     networks:
       - spring
     depends_on:

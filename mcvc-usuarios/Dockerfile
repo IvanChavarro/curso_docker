@@ -24,5 +24,5 @@ RUN mkdir ./logs
 COPY --from=builder /app/msvc-usuarios/target/mcvc-usuarios-0.0.1-SNAPSHOT.jar .
 ENV PORT 8001
 EXPOSE ${PORT}
-
-ENTRYPOINT ["java","-jar","mcvc-usuarios-0.0.1-SNAPSHOT.jar"]
+CMD sleep 20 && java -jar mcvc-usuarios-0.0.1-SNAPSHOT.jar
+#ENTRYPOINT ["java","-jar","mcvc-usuarios-0.0.1-SNAPSHOT.jar"]
