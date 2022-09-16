@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,6 +30,14 @@ import org.udemy.springcloud.msvc.usuarios.service.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	private UsuarioService service;
+
+	@Autowired
+	private ApplicationContext context;
+
+	@GetMapping(value = "/crash")
+	public void crash() {
+		((ConfigurableApplicationContext) context).close();
+	}
 
 	@GetMapping
 	public ResponseEntity<?> listarTodos() {
@@ -83,8 +93,8 @@ public class UsuarioController {
 
 	private ResponseEntity<?> validarCorreo(Usuario usuario) {
 		// mensaje de error personalizado con la clase singleton del jdk
-		return ResponseEntity.badRequest()
-				.body(Collections.singletonMap("Error", "Ya existe!!!! un usuario con el correo " + usuario.getEmail()));
+		return ResponseEntity.badRequest().body(
+				Collections.singletonMap("Error", "Ya existe!!!! un usuario con el correo " + usuario.getEmail()));
 	}
 
 	@DeleteMapping(value = "/{id}")

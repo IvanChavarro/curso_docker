@@ -24,8 +24,8 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	@NotBlank(message = "El nombre no debe ser vacío")
-	private String nombre;
+	@NotBlank(message = "El name no debe ser vacío")
+	private String name;
 	@Column(unique = true)
 	@NotBlank(message = "El email no debe ser vacío")
 	@Email(message = "El email debe estar escrito correctamente")
