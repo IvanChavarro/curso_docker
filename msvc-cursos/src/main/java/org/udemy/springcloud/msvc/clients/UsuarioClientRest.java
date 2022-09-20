@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.udemy.springcloud.msvc.models.Usuario;
 
-@FeignClient(name = "msvc-usuarios", url = "${msvc.usuarios.url}")
+//@FeignClient(name = "msvc-usuarios", url = "${msvc.usuarios.url}")
+@FeignClient(name = "msvc-usuarios/usuarios")
 public interface UsuarioClientRest {
 	@GetMapping(value = "/{id}")
 	public Usuario detalle(@PathVariable Long id);

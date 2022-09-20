@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,9 @@ public class UsuarioController {
 
 	@Autowired
 	private ApplicationContext context;
+	
+	@Autowired
+	private Environment env;
 
 	@GetMapping(value = "/crash")
 	public void crash() {
@@ -41,7 +45,10 @@ public class UsuarioController {
 
 	@GetMapping
 	public ResponseEntity<?> listarTodos() {
-		return ResponseEntity.status(HttpStatus.OK).body(service.listar());
+		Map<String, Object> body = new HashMap<>();
+		body.put("usuarios", service.listar());
+		body.put("texto", env.getProperty("config.texto"));
+		return ResponseEntity.ok(body);
 	}
 
 	@GetMapping(value = "/{id}")

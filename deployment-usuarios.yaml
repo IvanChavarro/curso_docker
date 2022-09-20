@@ -1,19 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: msvc-usuarios
+   name: msvc-usuarios
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: msvc-usuarios
-  template:
-    metadata:
-      labels:
-        app: msvc-usuarios
-    spec:
-      containers:
-      - image: ivanchavarro/usuarios:v3
-        name: usuarios
-        ports:
-        - containerPort: 8001
+   replicas: 3
+   selector:
+      matchLabels:
+         app: msvc-usuarios
+   template:
+      metadata:
+         labels:
+            app: msvc-usuarios
+      spec:
+         containers:
+         -  image: ivanchavarro/usuarios:latest
+            name: usuarios
+            ports:
+            -  containerPort: 8001
+#           resources:
+# ------------------
+# Orphaned comments:
+# ------------------
+# Was at begin of line:21 :#            requests:
+# Was at begin of line:22 :#             memory: "512Mi"
+# Was at begin of line:23 :#            cpu: "400m"
+# Was at begin of line:24 :#         limits:
+# Was at begin of line:25 :#          memory: "800Mi"
+# Was at begin of line:26 :#         cpu: "550m"
+# Was at begin of line:27 :# readinessProbe:
+# Was at begin of line:28 :# ------------------
+# Was at begin of line:29 :# Orphaned comments:
+# Was at begin of line:30 :# ------------------
+# Was at begin of line:31 :# Was at begin of line:21 :#  httpGet:
+# Was at begin of line:32 :# Was at begin of line:22 :#    path: /actuator/health/readiness
+# Was at begin of line:33 :# Was at begin of line:23 :#    port: 8001
+# Was at begin of line:34 :# Was at begin of line:24 :#    scheme: HTTP
+# Was at begin of line:35 :# Was at begin of line:25 :# initialDelaySeconds: 5
+# Was at begin of line:36 :# Was at begin of line:26 :# periodSeconds: 20
+# Was at begin of line:37 :# Was at begin of line:27 :#timeoutSeconds: 10
+# Was at begin of line:38 :# Was at begin of line:28 :#livenessProbe:
+# Was at begin of line:39 :# Was at begin of line:29 :# httpGet:
+# Was at begin of line:40 :# Was at begin of line:30 :#  path: /actuator/healt/liveness
+# Was at begin of line:41 :# Was at begin of line:31 :# port: 8001
+# Was at begin of line:42 :# Was at begin of line:32 :#scheme: HTTP
+# Was at begin of line:43 :# Was at begin of line:33 :#initialDelaySeconds: 10
+# Was at begin of line:44 :# Was at begin of line:34 :#periodSeconds: 30
+# Was at begin of line:45 :# Was at begin of line:35 :#timeoutSeconds: 10
