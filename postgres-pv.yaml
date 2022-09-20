@@ -6,9 +6,13 @@ spec: #En la documentación de Kubernetes, Concepts, storage, persistent volumes
   capacity:
     storage: 2Gi #Se mide en GB
   volumeMode: Filesystem
-  storageClassName: standard
+  storageClassName: ""
   accessModes: 
-    - ReadWriteOnce
-  hostPath: 
-    path: /var/lib/postgresql/data
-    type: DirectoryOrCreate  
+  #  - ReadWriteOnce
+    - ReadWriteMany
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0b903c266c7c888cb
+ # hostPath: 
+ #   path: /var/lib/postgresql/data
+ #   type: DirectoryOrCreate  
