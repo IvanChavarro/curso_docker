@@ -69,7 +69,7 @@ public class SecurityConfig {
 	@Bean
 	@Order(2)
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+		http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated()).csrf().disable()
 				// Form login handles the redirect to the login page from the
 				// authorization server filter chain
 				.formLogin(Customizer.withDefaults());
@@ -98,7 +98,7 @@ public class SecurityConfig {
 	public RegisteredClientRepository registeredClientRepository() {
 		RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
 				.clientId("usuarios-client")
-				//.clientSecret("{noop}12345")
+				// .clientSecret("{noop}12345")
 				.clientSecret(passwordEncoder().encode("12345"))
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
@@ -106,7 +106,7 @@ public class SecurityConfig {
 				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
 				.redirectUri(env.getProperty("LB_USUARIOS_URI") + "/login/oauth2/code/msvc-usuarios-client")
 				.redirectUri(env.getProperty("LB_USUARIOS_URI") + "/authorized").scope(OidcScopes.OPENID).scope("read")
-				.scope("write").clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+				.scope("write").clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
 				.build();
 
 		return new InMemoryRegisteredClientRepository(registeredClient);
