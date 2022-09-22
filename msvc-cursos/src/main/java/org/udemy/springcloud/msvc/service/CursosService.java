@@ -16,11 +16,11 @@ public interface CursosService {
 	public void eliminar(Long id);
 
 	// Métodos relacionados al microservicio usuario
-	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId);
+	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId, String token);
 
-	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId);
+	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId, String token);
 
-	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId);
+	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId, String token);
 
 	public void eliminarCursoUsuarioPorId(Long id);
 }

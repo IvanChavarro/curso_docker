@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.udemy.springcloud.msvc.models.Usuario;
@@ -28,7 +29,6 @@ import feign.FeignException;
 @RequestMapping(value = "/cursos")
 public class CursosController {
 
-	
 	@Autowired
 	private CursosService service;
 
@@ -64,10 +64,11 @@ public class CursosController {
 	}
 
 	@PostMapping(value = "/asignar-usuario/{cursoId}")
-	private ResponseEntity<?> asignarCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario) {
+	private ResponseEntity<?> asignarCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario,
+			@RequestHeader(value = "Authorization", required = true) String token) {
 		Optional<Usuario> optional = null;
 		try {
-			optional = service.asignarUsuario(usuario, cursoId);
+			optional = service.asignarUsuario(usuario, cursoId, token);
 			if (optional.isPresent()) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(optional.get());
 			}
@@ -80,10 +81,11 @@ public class CursosController {
 	}
 
 	@PostMapping(value = "/crear-usuario/{cursoId}")
-	private ResponseEntity<?> crearCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario) {
+	private ResponseEntity<?> crearCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario,
+			@RequestHeader(value = "Authorization", required = true) String token) {
 		Optional<Usuario> optional = null;
 		try {
-			optional = service.crearUsuario(usuario, cursoId);
+			optional = service.crearUsuario(usuario, cursoId, token);
 			if (optional.isPresent()) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(optional.get());
 			}
@@ -96,10 +98,11 @@ public class CursosController {
 	}
 
 	@DeleteMapping(value = "/eliminar-usuario/{cursoId}")
-	private ResponseEntity<?> eliminarCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario) {
+	private ResponseEntity<?> eliminarCursoUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario,
+			@RequestHeader(value = "Authorization", required = true) String token) {
 		Optional<Usuario> optional = null;
 		try {
-			optional = service.eliminarUsuario(usuario, cursoId);
+			optional = service.eliminarUsuario(usuario, cursoId, token);
 			if (optional.isPresent()) {
 				return ResponseEntity.status(HttpStatus.OK).body(optional.get());
 			}

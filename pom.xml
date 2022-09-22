@@ -18,6 +18,7 @@
 		<module>mcvc-usuarios</module>
 		<module>msvc-cursos</module>
 		<module>msvc-gateway</module>
+		<module>msvc-auth</module>
 	</modules>
 
 	<name>curso-kubernetes</name>

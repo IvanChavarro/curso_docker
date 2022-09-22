@@ -35,7 +35,7 @@ public class CursosServiceImpl implements CursosService {
 			cursos.getCursoUsuarios().forEach(cu -> {
 				idsUsuarios.add(cu.getUsuarioId());
 			});
-			List<Usuario> usuarios = usuarioClientRest.usuariosPorCurso(idsUsuarios);
+			List<Usuario> usuarios = usuarioClientRest.usuariosPorCurso(idsUsuarios, "");
 			cursos.setUsuarios(usuarios);
 			repository.save(cursos);
 			return Optional.of(cursos);
@@ -57,10 +57,10 @@ public class CursosServiceImpl implements CursosService {
 	}
 
 	@Override
-	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId, String token) {
 		Optional<Cursos> opt = repository.findById(cursoId);
 		if (opt.isPresent()) {
-			Usuario usuarioMsvc = usuarioClientRest.detalle(usuario.getId());
+			Usuario usuarioMsvc = usuarioClientRest.detalle(usuario.getId(), token);
 			Cursos curso = opt.get();
 			CursoUsuario cursoUsuario = CursoUsuario.builder().usuarioId(usuarioMsvc.getId()).build();
 			curso.addCursoUsuarios(cursoUsuario);
@@ -71,10 +71,10 @@ public class CursosServiceImpl implements CursosService {
 	}
 
 	@Override
-	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId, String token) {
 		Optional<Cursos> opt = repository.findById(cursoId);
 		if (opt.isPresent()) {
-			Usuario usuarioNuevo = usuarioClientRest.guardar(usuario);
+			Usuario usuarioNuevo = usuarioClientRest.guardar(usuario, token);
 			Cursos curso = opt.get();
 			CursoUsuario cursoUsuario = CursoUsuario.builder().usuarioId(usuarioNuevo.getId()).build();
 			curso.addCursoUsuarios(cursoUsuario);
@@ -85,10 +85,10 @@ public class CursosServiceImpl implements CursosService {
 	}
 
 	@Override
-	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId, String token) {
 		Optional<Cursos> opt = repository.findById(cursoId);
 		if (opt.isPresent()) {
-			Usuario usuarioMsvc = usuarioClientRest.detalle(usuario.getId());
+			Usuario usuarioMsvc = usuarioClientRest.detalle(usuario.getId(), token);
 			Cursos curso = opt.get();
 			CursoUsuario cursoUsuario = CursoUsuario.builder().usuarioId(usuarioMsvc.getId()).build();
 			curso.removeCursoUsuario(cursoUsuario);
@@ -97,7 +97,6 @@ public class CursosServiceImpl implements CursosService {
 		}
 		return Optional.empty();
 	}
-
 
 	@Override
 	public void eliminarCursoUsuarioPorId(Long id) {
